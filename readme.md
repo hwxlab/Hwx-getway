@@ -1,125 +1,142 @@
-<div align="center"><img src="assets/branding/hwx-gateway-banner.png" alt="HWX Gateway Banner" width="100%"/>⚡ HWX Gateway
+<div align="center">⚡ HWX Gateway
 
 Connect. Send. Manage.
 
-A Modern Android SMS Gateway Platform
+A Modern Android SMS Gateway Platform by HWX Lab
 
-""Brand" (https://img.shields.io/badge/Brand-HWX%20Lab-00CFFF?style=for-the-badge)" (https://github.com/hwxlab)
-""Platform" (https://img.shields.io/badge/Platform-Web%20%2B%20Android-6366F1?style=for-the-badge)" (#)
-""Backend" (https://img.shields.io/badge/Backend-API-8B5CF6?style=for-the-badge)" (#)
-""Database" (https://img.shields.io/badge/Database-Firebase-FFCA28?style=for-the-badge)" (#)
+""HWX Lab" (https://img.shields.io/badge/BUILT%20BY-HWX%20LAB-00CFFF?style=for-the-badge)" (https://github.com/hwxlab)
+""Platform" (https://img.shields.io/badge/PLATFORM-Web%20%2B%20Android-6366F1?style=for-the-badge)" (#)
+""Firebase" (https://img.shields.io/badge/BACKEND-Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)" (https://firebase.google.com/)
+""License" (https://img.shields.io/badge/LICENSE-MIT-8B5CF6?style=for-the-badge)" (LICENSE)
 
-Manage Android devices and send SMS through an API-driven gateway.
+Connect Android Devices. Manage SIMs. Integrate SMS Through APIs.
 
-"Features" (#-features) • "Architecture" (#-architecture) • "Installation" (#-installation) • "Configuration" (#-configuration) • "API" (#-api-documentation) • "Deployment" (#-deployment)
+"Features" (#-features) • "Workflow" (#-workflow) • "Installation" (#-installation) • "Configuration" (#-configuration) • "API" (#-api-documentation) • "Deployment" (#-deployment)
 
 </div>---
 
-🚀 About HWX Gateway
+🚀 About
 
-HWX Gateway is an Android-based SMS Gateway platform developed under HWX Lab.
+HWX Gateway is an Android-based SMS Gateway platform developed by HWX Lab.
 
-It is designed to connect Android devices with a centralized web dashboard, allowing users to manage connected devices and integrate SMS functionality through API requests.
+It connects Android devices with a centralized web dashboard, providing an API-driven approach to SMS management.
 
-The project combines a web dashboard, backend services, Firebase integration, and an Android device application.
+The platform is designed to help developers and users manage connected devices, select SIM slots, submit SMS requests, and monitor available results through a centralized interface.
 
-Our goal is to make Android SMS gateway management simple, accessible, and developer-friendly.
+🎯 Our Vision
+
+To make Android-based SMS gateway integration simple, accessible, and developer-friendly.
 
 ✨ Features
 
-- 📱 Android Device Integration — Connect Android devices with the gateway.
-- 🔗 Device Pairing — Designed around QR code and pairing-code connection.
-- 📡 SMS API — Send SMS through API requests.
-- 📶 SIM Selection — Support for selecting available SIM slots where implemented.
-- 📊 Web Dashboard — Centralized device and SMS management.
-- 🔥 Firebase Integration — Firebase-based application infrastructure.
-- 📋 SMS Logs — Track SMS requests and their available results.
-- ⚙️ API Documentation — Developer-friendly API integration.
-- 📱 Mobile-Friendly Interface — Responsive dashboard experience.
+Feature| Description
+📱 Android Integration| Connect Android devices
+🔗 Device Pairing| QR code and pairing-code workflow
+🌐 Web Dashboard| Centralized device management
+📡 SMS API| API-based SMS requests
+📶 SIM Selection| Select available SIM slots
+🔥 Firebase| Firebase application infrastructure
+📋 SMS Logs| View available SMS records
+🔐 API Security| Authenticated API access
+📱 Responsive UI| Mobile-friendly dashboard
 
-«Feature availability depends on the implementation in the current source code and the connected Android device.»
+«Features are subject to actual implementation and supported device capabilities.»
+
+🔄 Workflow
+
+flowchart TD
+    A["🌐 Website Dashboard"]
+    B["➕ Add Device"]
+    C["🔗 Generate QR / Pairing Code"]
+    D["📱 Android App Connects"]
+    E["🔐 Grant Required Permissions"]
+    F["📡 Device & SIM Information"]
+    G["🎛️ Select Device & SIM"]
+    H["📨 SMS API Request"]
+    I["⚙️ Backend Processing"]
+    J["📋 SMS Result & Logs"]
+
+    A --> B --> C --> D
+    D --> E --> F --> G
+    G --> H --> I --> J
+
+    style A fill:#172554,stroke:#3B82F6,color:#fff
+    style H fill:#312E81,stroke:#8B5CF6,color:#fff
+    style J fill:#164E63,stroke:#06B6D4,color:#fff
+
+The diagram represents the intended workflow. Only implemented functionality should be considered available.
 
 🏗️ Architecture
 
-<div align="center"><img src="assets/branding/hwx-architecture.png" alt="HWX Gateway Architecture" width="100%"/></div>System Components
+flowchart TD
+    U["👤 User / Developer"]
+    W["🌐 Web Dashboard"]
+    B["⚙️ Backend API"]
+    F[("🔥 Firebase")]
+    A["📱 Android App"]
+    S["📶 Android SIM"]
+    L["📋 SMS Logs"]
 
-Component| Responsibility
-Web Dashboard| Device and API management
-Backend API| Request handling and processing
-Firebase| Database and application services
-Android App| Device connection and SMS operations
-SIM Card| SMS transmission through the device
+    U --> W
+    W <--> B
+    B <--> F
+    B <--> A
+    A --> S
+    B --> L
+    F --> L
 
-🔄 How It Works
+Core Components
 
-<div align="center"><img src="assets/branding/hwx-workflow.png" alt="HWX Gateway Workflow" width="100%"/></div>Basic Workflow
-
-1. Open the HWX Gateway dashboard.
-2. Add a device.
-3. Generate a QR code or pairing code.
-4. Connect the Android application.
-5. Grant the required Android permissions.
-6. Synchronize available device and SIM information.
-7. Select a connected device and SIM.
-8. Submit an SMS API request.
-9. Backend processes the request.
-10. View the available SMS result and logs.
-
-This workflow describes the intended platform flow. Individual steps require corresponding implementation in the source code.
+- Dashboard: Device and API management interface.
+- Backend: Handles application requests and business logic.
+- Firebase: Database and supported Firebase services.
+- Android Application: Connects authorized devices.
+- SIM: Provides device-side SMS transmission.
 
 🛠️ Technology Stack
 
-<div align="center">"React" (https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+"React" (https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 "TypeScript" (https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 "Vite" (https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
-"Firebase" (https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
 "Node.js" (https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+"Firebase" (https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
 "Android" (https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white)
 "Kotlin" (https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
 
-</div>The badges represent the intended technology ecosystem. Verify the actual dependencies against the repository before publishing.
+Verify the actual dependencies in the repository before publishing this technology list.
 
 📂 Project Structure
 
 HWX-Gateway/
 │
-├── assets/
-│   └── branding/
-│       ├── hwx-gateway-banner.png
-│       ├── hwx-gateway-logo.png
-│       ├── hwx-workflow.png
-│       ├── hwx-architecture.png
-│       ├── hwx-features.png
-│       └── hwx-lab-social.png
-│
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
-│   ├── PULL_REQUEST_TEMPLATE.md
-│   └── workflows/
+│   └── PULL_REQUEST_TEMPLATE.md
 │
-├── client/                  # Web dashboard (if present)
-├── server/                  # Backend (if present)
-├── android/                 # Android application (if present)
+├── client/
+├── server/
+├── android/
 │
 ├── .env.example
 ├── .gitignore
 ├── package.json
+├── LICENSE
+├── CONTRIBUTING.md
+├── SECURITY.md
 └── README.md
 
-Folder names above illustrate the documentation layout. Your actual repository structure may differ.
+Illustrative structure. Refer to the actual repository for available directories.
 
 ⚙️ Installation
 
 Prerequisites
 
-Before starting, make sure you have:
-
-- Node.js (LTS recommended)
+- Node.js LTS
 - npm or Bun
 - Git
-- A Firebase project
+- Firebase Project
 - Android Studio (for Android development)
-- Android device with a SIM card (for device-side SMS functionality)
+- Android device with an active SIM
 
 1. Clone Repository
 
@@ -129,27 +146,21 @@ cd Hwx-getway
 
 2. Install Dependencies
 
-For npm:
+Using npm:
 
 npm install
 
-For Bun:
+Using Bun:
 
 bun install
 
 3. Configure Environment
 
-Create your environment file:
-
 cp .env.example .env
 
 Add your own configuration values.
 
-4. Start Development
-
-Use the development scripts defined in your project's "package.json".
-
-For example:
+4. Start Development Server
 
 npm run dev
 
@@ -157,38 +168,35 @@ npm run dev
 
 npm run build
 
-Commands may need adjustment depending on the actual project scripts.
+Use the scripts actually defined in package.json.
 
 🔥 Firebase Configuration
 
-HWX Gateway uses Firebase services for its application infrastructure.
+HWX Gateway uses Firebase for its application infrastructure.
 
-Setup
+Setup Steps
 
-1. Open the "Firebase Console" (https://console.firebase.google.com/).
-2. Create or select a Firebase project.
+1. Visit "Firebase Console" (https://console.firebase.google.com/).
+2. Create a Firebase project.
 3. Register your web application.
-4. Configure Firebase Authentication if required by the application.
+4. Configure Firebase Authentication if required.
 5. Create a Firestore database.
-6. Enable Firebase Cloud Messaging if required by the device communication implementation.
-7. Generate the appropriate Firebase configuration.
-8. Configure credentials through environment variables.
+6. Enable Firebase Cloud Messaging if required by the implementation.
+7. Configure the appropriate credentials.
+8. Set the required environment variables.
 
-Firebase Security
+Security Recommendations
 
-- Never commit private service-account JSON files.
-- Never expose private credentials in frontend code.
+- Never publish Firebase service-account JSON.
+- Never commit private API keys or tokens.
 - Configure Firestore Security Rules.
-- Restrict administrative access to trusted backend services.
-- Use environment variables for deployment secrets.
+- Restrict administrative credentials to backend services.
+- Validate user permissions.
 
 🔐 Environment Variables
 
-Create ".env.example" with generic placeholders.
+Example ".env.example":
 
-Example:
-
-# Application
 NODE_ENV=development
 PORT=3000
 
@@ -198,23 +206,23 @@ VITE_FIREBASE_AUTH_DOMAIN=YOUR_PROJECT.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
 VITE_FIREBASE_STORAGE_BUCKET=YOUR_PROJECT.appspot.com
 VITE_FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID
-VITE_FIREBASE_APP_ID=YOUR_APP_ID
+VITE_FIREBASE_APP_ID=YOUR_FIREBASE_APP_ID
 
-# Firebase Admin Configuration
+# Firebase Admin
 FIREBASE_SERVICE_ACCOUNT_JSON=YOUR_SERVICE_ACCOUNT_JSON
 
-# Application URLs
+# Application
 APP_BASE_URL=http://localhost:3000
 
-«Important: Adjust variable names to match the actual source code. Frontend environment variables are not private secrets merely because they are stored in an environment file. Never put service-account credentials in frontend variables.»
+Important: Match variable names with the actual backend and frontend code. Variables prefixed with "VITE_" are exposed to client-side code. Never put service-account secrets in them.
 
 📡 API Documentation
 
-HWX Gateway is designed to provide API-based SMS integration.
+HWX Gateway is designed to support API-based SMS integration.
 
-The following is an illustrative request format. Confirm the actual endpoint, authentication header, and request schema from the backend implementation before using it.
+Send SMS Request
 
-Send SMS
+Illustrative example:
 
 curl -X POST "YOUR_BACKEND_URL/v1/sms/send" \
   -H "Content-Type: application/json" \
@@ -234,87 +242,77 @@ Example Response
   "job_id": "YOUR_JOB_ID"
 }
 
-Illustrative response only. Actual response fields and delivery status depend on the backend implementation.
-
-API Integration
-
-Developers can integrate the gateway with:
-
-- Websites
-- Backend applications
-- Custom automation systems
-- Supported third-party applications
-
-Use your own API key and authorized connected device.
+«This is an illustrative example, not a verified API contract. Check the actual backend routes and schemas before integration.»
 
 🚀 Deployment
 
-Deploy Backend and Dashboard on Vercel
+Vercel Deployment
 
-1. Push the project to GitHub.
+1. Push your project to GitHub.
 2. Open "Vercel" (https://vercel.com/).
-3. Import your GitHub repository.
-4. Configure the correct project root directory.
-5. Set the required environment variables.
-6. Configure the build command and output settings according to the project.
-7. Deploy the application.
-8. Verify the API and dashboard after deployment.
+3. Import your repository.
+4. Configure the project root directory.
+5. Add environment variables.
+6. Set the correct build command.
+7. Deploy the project.
+8. Verify dashboard and API functionality.
 
 Deployment Checklist
 
 - [ ] Environment variables configured.
-- [ ] Firebase project connected.
-- [ ] Firestore permissions configured.
+- [ ] Firebase connected.
+- [ ] Firestore rules configured.
 - [ ] Backend routes verified.
 - [ ] API authentication tested.
-- [ ] Dashboard deployment verified.
-- [ ] Android connection tested.
-- [ ] SMS functionality tested on a supported device.
+- [ ] Dashboard tested.
+- [ ] Android device connection tested.
+- [ ] SMS functionality tested.
 
-Important: Vercel serverless functions are not persistent background servers. Long-running device connections and background jobs require an appropriate infrastructure design.
+Infrastructure note: Vercel serverless functions are not persistent WebSocket servers. Persistent device connections and background processing need appropriate infrastructure.
 
-🛡️ Security
+🔒 Security
 
-Security is an important part of HWX Gateway.
+Security is a priority for HWX Gateway.
 
-- Keep API keys private.
-- Never publish Firebase service-account credentials.
-- Validate incoming API requests.
-- Restrict unauthorized device access.
-- Use secure authentication.
-- Apply rate limiting where appropriate.
-- Protect sensitive SMS logs and device information.
+- Protect API keys.
+- Never publish service-account credentials.
+- Validate incoming requests.
+- Restrict unauthorized device pairing.
+- Apply appropriate rate limits.
+- Protect device information and SMS logs.
 - Follow Android permission requirements.
 
-For security-related reports, see "SECURITY.md" (SECURITY.md).
+For security reports, see "SECURITY.md" (SECURITY.md).
 
 🤝 Contributing
 
-Contributions, suggestions, bug reports, and improvements are welcome.
+Contributions and suggestions are welcome!
 
-1. Fork the repository.
-2. Create a new branch.
+1. Fork this repository.
+2. Create a feature branch.
 3. Make your changes.
 4. Test your changes.
 5. Submit a Pull Request.
 
-Please read "CONTRIBUTING.md" (CONTRIBUTING.md) before contributing.
+Read "CONTRIBUTING.md" (CONTRIBUTING.md) before contributing.
 
-📸 Project Preview
+🌐 Follow HWX Lab
 
-<div align="center"><img src="assets/branding/hwx-features.png" alt="HWX Gateway Features" width="100%"/></div>🌐 Follow HWX Lab
+Stay connected with HWX Lab for:
 
-<div align="center"><img src="assets/branding/hwx-lab-social.png" alt="HWX Lab Social Branding" width="100%"/>Stay Connected with HWX Lab
-
-Follow us for technology tutorials, project updates, development insights, and new releases.
-
-""Instagram" (https://img.shields.io/badge/Instagram-@hwxlab-E4405F?style=for-the-badge&logo=instagram&logoColor=white)" (https://www.instagram.com/hwxlab/)
+- Technology tutorials.
+- Open-source projects.
+- Development updates.
+- New releases.
+- Programming and AI insights.
 
 Instagram: "@hwxlab" (https://www.instagram.com/hwxlab/)
 
-</div>---
+""Instagram" (https://img.shields.io/badge/Follow%20HWX%20Lab-Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)" (https://www.instagram.com/hwxlab/)
 
-<div align="center"><img src="assets/branding/hwx-gateway-logo.png" alt="HWX Lab Logo" width="110"/>HWX Gateway
+---
+
+<div align="center">⚡ HWX Gateway
 
 Connect. Send. Manage.
 
