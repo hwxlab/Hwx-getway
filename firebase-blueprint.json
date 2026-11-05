@@ -1,0 +1,209 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with SMS quota and account settings",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "dailyLimit": { "type": "number" },
+        "monthlyLimit": { "type": "number" }
+      },
+      "required": ["userId", "email"]
+    },
+    "Device": {
+      "title": "Device",
+      "description": "Registered Android SMS Gateway device",
+      "type": "object",
+      "properties": {
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "model": { "type": "string", "maxLength": 128 },
+        "androidVersion": { "type": "string", "maxLength": 32 },
+        "fcmToken": { "type": "string", "maxLength": 512 },
+        "smsPermissionGranted": { "type": "boolean" },
+        "simCount": { "type": "number" },
+        "isOnline": { "type": "boolean" },
+        "lastSeenAt": { "type": "string" },
+        "pairedAt": { "type": "string" },
+        "appVersion": { "type": "string", "maxLength": 32 },
+        "status": { "type": "string", "enum": ["active", "revoked", "suspended"] }
+      },
+      "required": ["deviceId", "accountId", "name", "status"]
+    },
+    "PairingSession": {
+      "title": "PairingSession",
+      "description": "Temporary 2-5 minute session for pairing new Android hardware",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "deviceName": { "type": "string", "maxLength": 128 },
+        "pairingCode": { "type": "string", "maxLength": 32 },
+        "pairingToken": { "type": "string", "maxLength": 256 },
+        "expiresAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "paired", "expired"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["sessionId", "accountId", "pairingCode", "pairingToken", "status"]
+    },
+    "Sim": {
+      "title": "Sim",
+      "description": "SIM card slot inside a connected Android device",
+      "type": "object",
+      "properties": {
+        "simId": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "simSlot": { "type": "number" },
+        "carrierName": { "type": "string", "maxLength": 128 },
+        "phoneNumber": { "type": "string", "maxLength": 64 },
+        "availability": { "type": "string", "enum": ["Available", "No Network", "SIM Not Available", "Permission Denied", "Unknown", "Insufficient Balance"] },
+        "networkStatus": { "type": "string", "maxLength": 64 },
+        "smsPermission": { "type": "boolean" },
+        "lastHealthUpdateAt": { "type": "string" }
+      },
+      "required": ["simId", "deviceId", "accountId", "simSlot", "availability"]
+    },
+    "ApiKey": {
+      "title": "ApiKey",
+      "description": "Secure hashed API credentials for programmatic SMS integration",
+      "type": "object",
+      "properties": {
+        "keyId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "keyPrefix": { "type": "string", "maxLength": 16 },
+        "keyHash": { "type": "string", "maxLength": 256 },
+        "scopes": { "type": "string", "maxLength": 256 },
+        "status": { "type": "string", "enum": ["active", "revoked"] },
+        "createdAt": { "type": "string" },
+        "lastUsedAt": { "type": "string" },
+        "totalRequests": { "type": "number" }
+      },
+      "required": ["keyId", "accountId", "name", "keyPrefix", "keyHash", "status"]
+    },
+    "SmsJob": {
+      "title": "SmsJob",
+      "description": "Single or Child SMS dispatch task dispatched to Android gateway",
+      "type": "object",
+      "properties": {
+        "jobId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "simSlot": { "type": "number" },
+        "recipient": { "type": "string", "maxLength": 64 },
+        "message": { "type": "string", "maxLength": 1600 },
+        "status": { "type": "string", "enum": ["queued", "processing", "sent", "failed", "expired", "uncertain", "delivered"] },
+        "priority": { "type": "string", "enum": ["high", "normal"] },
+        "parentBulkJobId": { "type": "string", "maxLength": 128 },
+        "errorCode": { "type": "string", "maxLength": 64 },
+        "errorMessage": { "type": "string", "maxLength": 512 },
+        "retryCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "processingAt": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "leaseExpiresAt": { "type": "string" }
+      },
+      "required": ["jobId", "accountId", "deviceId", "simSlot", "recipient", "message", "status", "priority"]
+    },
+    "BulkJob": {
+      "title": "BulkJob",
+      "description": "Parent batch tracking record with aggregated child progress",
+      "type": "object",
+      "properties": {
+        "bulkJobId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "simSlot": { "type": "number" },
+        "totalRecipients": { "type": "number" },
+        "queuedCount": { "type": "number" },
+        "processingCount": { "type": "number" },
+        "sentCount": { "type": "number" },
+        "failedCount": { "type": "number" },
+        "expiredCount": { "type": "number" },
+        "uncertainCount": { "type": "number" },
+        "overallStatus": { "type": "string", "enum": ["queued", "processing", "completed", "partial_failure", "failed"] },
+        "createdAt": { "type": "string" },
+        "completedAt": { "type": "string" }
+      },
+      "required": ["bulkJobId", "accountId", "deviceId", "simSlot", "totalRecipients", "overallStatus"]
+    },
+    "SmsLog": {
+      "title": "SmsLog",
+      "description": "Auditable log entry for historical analysis and compliance",
+      "type": "object",
+      "properties": {
+        "logId": { "type": "string", "maxLength": 128 },
+        "jobId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "parentBulkJobId": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "simSlot": { "type": "number" },
+        "recipient": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "maxLength": 32 },
+        "errorCode": { "type": "string", "maxLength": 64 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["logId", "jobId", "accountId", "recipient", "status", "timestamp"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Security audit record for logins, credential changes, and key creation",
+      "type": "object",
+      "properties": {
+        "logId": { "type": "string", "maxLength": 128 },
+        "accountId": { "type": "string", "maxLength": 128 },
+        "action": { "type": "string", "maxLength": 64 },
+        "actor": { "type": "string", "maxLength": 128 },
+        "details": { "type": "string", "maxLength": 512 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["logId", "accountId", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User account profile and configuration"
+    },
+    "/devices/{deviceId}": {
+      "schema": "Device",
+      "description": "Android gateway hardware device registries"
+    },
+    "/pairing_sessions/{sessionId}": {
+      "schema": "PairingSession",
+      "description": "Active pairing codes and tokens for device onboarding"
+    },
+    "/sims/{simId}": {
+      "schema": "Sim",
+      "description": "SIM slots reported by Android gateways"
+    },
+    "/api_keys/{keyId}": {
+      "schema": "ApiKey",
+      "description": "Hashed developer API keys"
+    },
+    "/sms_jobs/{jobId}": {
+      "schema": "SmsJob",
+      "description": "Queued and dispatched SMS jobs"
+    },
+    "/bulk_jobs/{bulkJobId}": {
+      "schema": "BulkJob",
+      "description": "Bulk parent SMS batch jobs"
+    },
+    "/sms_logs/{logId}": {
+      "schema": "SmsLog",
+      "description": "Audit trail of SMS dispatches"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Security action logs"
+    }
+  }
+}

@@ -1,0 +1,128 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(accountId) {
+      return isSignedIn() && request.auth.uid == accountId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidString(str, minLen, maxLen) {
+      return str is string && str.size() >= minLen && str.size() <= maxLen;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow list: if false; // Blanket enumeration forbidden
+      allow create: if isSignedIn() && request.auth.uid == userId
+        && request.resource.data.userId == userId
+        && isValidString(request.resource.data.email, 3, 256);
+      allow update: if isSignedIn() && request.auth.uid == userId
+        && request.resource.data.userId == userId
+        && (!('role' in request.resource.data) || request.resource.data.role == resource.data.role); // Prevent self-elevation
+      allow delete: if false;
+    }
+
+    // Devices Collection
+    match /devices/{deviceId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid
+        && isValidId(deviceId)
+        && isValidString(request.resource.data.name, 1, 128);
+      allow update: if isSignedIn() && resource.data.accountId == request.auth.uid
+        && request.resource.data.accountId == resource.data.accountId;
+      allow delete: if isSignedIn() && resource.data.accountId == request.auth.uid;
+    }
+
+    // Pairing Sessions Collection
+    match /pairing_sessions/{sessionId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid
+        && isValidId(sessionId);
+      allow update: if isSignedIn() && resource.data.accountId == request.auth.uid
+        && request.resource.data.accountId == resource.data.accountId;
+      allow delete: if isSignedIn() && resource.data.accountId == request.auth.uid;
+    }
+
+    // SIM Cards Collection
+    match /sims/{simId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid
+        && isValidId(simId);
+      allow update: if isSignedIn() && resource.data.accountId == request.auth.uid
+        && request.resource.data.accountId == resource.data.accountId;
+      allow delete: if isSignedIn() && resource.data.accountId == request.auth.uid;
+    }
+
+    // API Keys Collection (Only metadata stored in client docs, raw secret never in db)
+    match /api_keys/{keyId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid
+        && isValidId(keyId)
+        && isValidString(request.resource.data.name, 1, 128);
+      allow update: if isSignedIn() && resource.data.accountId == request.auth.uid
+        && request.resource.data.accountId == resource.data.accountId;
+      allow delete: if isSignedIn() && resource.data.accountId == request.auth.uid;
+    }
+
+    // SMS Jobs Collection
+    match /sms_jobs/{jobId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid
+        && isValidId(jobId)
+        && isValidString(request.resource.data.recipient, 3, 64)
+        && isValidString(request.resource.data.message, 1, 1600);
+      allow update: if isSignedIn() && resource.data.accountId == request.auth.uid
+        && request.resource.data.accountId == resource.data.accountId;
+      allow delete: if false; // Jobs are permanent auditable records
+    }
+
+    // Bulk Jobs Collection
+    match /bulk_jobs/{bulkJobId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid
+        && isValidId(bulkJobId);
+      allow update: if isSignedIn() && resource.data.accountId == request.auth.uid
+        && request.resource.data.accountId == resource.data.accountId;
+      allow delete: if false;
+    }
+
+    // SMS Logs Collection
+    match /sms_logs/{logId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid;
+      allow update: if false; // Immutable logs
+      allow delete: if false;
+    }
+
+    // Audit Logs Collection
+    match /audit_logs/{logId} {
+      allow get: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.accountId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.accountId == request.auth.uid;
+      allow update: if false; // Immutable audit log
+      allow delete: if false;
+    }
+  }
+}

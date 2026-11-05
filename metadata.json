@@ -1,0 +1,6 @@
+{
+  "name": "HWX Gateway - Android SMS Gateway Platform",
+  "description": "Production-grade web-managed Android SMS Gateway platform with device pairing, multi-SIM routing, single & bulk SMS APIs, queue scheduling, and live monitoring.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
